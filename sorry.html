@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Surprise for You 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffe1ec, #fff7fa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+@keyframes shake {
+  0% { transform: translate(0); }
+  25% { transform: translate(5px, 5px); }
+  50% { transform: translate(-5px, -5px); }
+  75% { transform: translate(5px, -5px); }
+  100% { transform: translate(0); }
+}
+
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+.box {
+  width: 140px;
+  height: 140px;
+  background: #ff5d8f;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  animation: bounce 1.4s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.dog {
+  display: none;
+  text-align: center;
+  animation: walkIn 2s ease forwards;
+}
+@keyframes walkIn {
+  from { transform: translateX(-300px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.dog-face {
+  font-size: 90px;
+  transition: transform 0.5s;
+}
+
+.hug .dog-face {
+  transform: scale(1.2);
+}
+
+.kiss .dog-face::after {
+  content: " 😘";
+}
+
+.letter {
+  display: none;
+  background: white;
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 18px;
+  max-width: 340px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: pop 0.8s ease forwards;
+}
+@keyframes pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.buttons {
+  margin-top: 15px;
+  position: relative;
+  height: 90px;
+}
+
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#yesBtn {
+  background: #ff477e;
+  color: white;
+}
+
+#noBtn {
+  background: #ccc;
+  color: #333;
+  position: absolute;
+}
+
+#success {
+  display: none;
+  margin-top: 15px;
+  color: #ff477e;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body id="body">
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/03/audio_1f9c9a6e6d.mp3" type="audio/mpeg">
+</audio>
+
+<div class="box" id="box" onclick="openBox()">🎁 Open Me</div>
+
+<div class="dog" id="dog">
+  <div class="dog-face">🐶</div>
+  <p>I’m really sorry…</p>
+
+  <div class="letter" id="letter">
+    <h2>My Love 💌</h2>
+    <p>
+      Bonku knows he made a mistake and Bonku is truly sorry for hurting you.  
+      Please forgive Bonku for being silly sometimes. 🥺<br><br>
+
+      I love you Onekkhani — more than words can ever explain.<br>
+      I love you Onekkhani — for your smile, your heart, and your soul.<br>
+      I love you Onekkhani — today, tomorrow, and always. 💖<br><br>
+
+      Everything Bonku does comes from love,
+      and this little dog came just to say sorry.
+    </p>
+
+    <div class="buttons">
+      <button id="yesBtn" onclick="forgiven()">YES 💖</button>
+      <button id="noBtn">NO 😤</button>
+    </div>
+
+    <div id="success">
+      🥹💖 HUG + KISS ACCEPTED  
+      Bonku is forgiven forever  
+      Onekkhani love always 🤗😘
+    </div>
+  </div>
+</div>
+
+<script>
+let noScale = 1;
+let yesScale = 1;
+
+function openBox() {
+  box.style.display = "none";
+  dog.style.display = "block";
+  bgMusic.play();
+  setTimeout(() => letter.style.display = "block", 2000);
+}
+
+/* NO runs */
+noBtn.addEventListener("mouseover", () => {
+  noScale -= 0.1;
+  yesScale += 0.1;
+  noBtn.style.transform =
+    `translate(${Math.random()*200-100}px,${Math.random()*60-30}px) scale(${noScale})`;
+  yesBtn.style.transform = `scale(${yesScale})`;
+});
+
+/* YES */
+function forgiven() {
+  success.style.display = "block";
+  dog.classList.add("hug");
+  body.classList.add("shake");
+  setTimeout(() => dog.classList.add("kiss"), 700);
+  launchConfetti();
+}
+
+/* Hearts */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+  h.style.left = Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},500);
+
+/* Confetti */
+function launchConfetti() {
+  for(let i=0;i<70;i++){
+    const c=document.createElement("div");
+    c.innerHTML="🎉";
+    c.style.position="absolute";
+    c.style.left=Math.random()*100+"vw";
+    c.style.top="-20px";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+</script>
+
+</body>
+</html>
