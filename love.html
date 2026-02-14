@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Love You 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #ffb6c1;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    h1 {
+        font-size: 60px;
+        color: #fff;
+        margin-top: 100px;
+    }
+
+    p {
+        font-size: 22px;
+        color: white;
+    }
+
+    .buttons {
+        margin-top: 40px;
+        position: relative;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 20px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin: 10px;
+    }
+
+    #yesBtn {
+        background-color: #ff1493;
+        color: white;
+    }
+
+    #noBtn {
+        background-color: white;
+        color: #ff1493;
+        position: absolute;
+    }
+
+    .heart {
+        position: absolute;
+        color: red;
+        font-size: 20px;
+        animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(-10px);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>I Love You 💖</h1>
+<p>I am sorry I am not there right now. Please accept my apology.</p>
+
+<div class="buttons">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 😜</button>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    let yesScale = 1;
+
+    // Move NO button when hovered
+    noBtn.addEventListener("mouseover", function () {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 100);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+
+        // Increase YES button size
+        yesScale += 0.2;
+        yesBtn.style.transform = "scale(" + yesScale + ")";
+    });
+
+    // Heart shower effect
+    yesBtn.addEventListener("click", function () {
+        for (let i = 0; i < 50; i++) {
+            let heart = document.createElement("div");
+            heart.innerHTML = "💖";
+            heart.classList.add("heart");
+
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.top = "-20px";
+            heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+    });
+</script>
+
+</body>
+</html>
